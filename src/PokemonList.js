@@ -10,6 +10,7 @@ const PokemonList = props => {
     useEffect(() => {
         axios.get(`https://pokeapi.co/api/v2/pokemon`)
         .then(res => {
+            console.log('PokemonList Res', res)
             setPokemons(res.data.results)
         })
         .catch(err => {

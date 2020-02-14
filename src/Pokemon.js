@@ -9,7 +9,7 @@ const Pokemon = ({name, url}) => {
     useEffect(() => {
         axios.get(url)
         .then(res => {
-            console.log(res)
+            console.log('Pokemon res', res)
             setData(res.data)
         })
         .catch(err => {
