@@ -6,25 +6,42 @@ import { CardGroup } from 'semantic-ui-react'
 
 const PokemonList = props => {
     const [pokemons, setPokemons] = useState()
+    const [url, setURL] = useState(`https://pokeapi.co/api/v2/pokemon`)
 
     useEffect(() => {
-        axios.get(`https://pokeapi.co/api/v2/pokemon`)
+        axios.get(url)
         .then(res => {
             console.log('PokemonList Res', res)
-            setPokemons(res.data.results)
+            setPokemons(res.data)
         })
         .catch(err => {
             console.log(err)
         })
-    }, [])
+    }, [url])
+
+    const next = e => {
+        if(pokemons.next){
+            setURL(pokemons.next)
+        }
+    }
+
+    const previous = e => {
+        if(pokemons.previous){
+            setURL(pokemons.previous)
+        }
+    }
     return(
+        <>
         <CardGroup>
-            {pokemons && pokemons.map(pokemon => {
+            {pokemons && pokemons.results.map(pokemon => {
                 return(
                 <Pokemon key={pokemon.name} {...pokemon} />
             )
             })}
         </CardGroup>
+        <button onClick={previous}>Previous</button>
+        <button onClick={next}>Next</button>
+        </>
     )
 }
 
